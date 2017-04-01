@@ -1,0 +1,6 @@
+env
+venv
+*.pyc
+__pychace__
+*DS_store
+project/_config.py
