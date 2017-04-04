@@ -5,7 +5,7 @@ from flask import Flask, flash, redirect, render_template, request, session, url
 
 #config
 
-app = Flask(__Nname__)
+app = Flask(__name__)
 app.config.from_object('_config')
 
 #helper functions
@@ -15,6 +15,7 @@ def connect_db():
 
 def login_required(test):
 	@wraps(test)
+	def wrap(*args, **kwargs):
 		if 'logged_in' in session:
 			return test(*args, **kwargs)
 		else:
@@ -33,7 +34,7 @@ def logout():
 @app.route('/', methods = ['GET', 'POST'])
 def login():
 	if request.method == 'POST':
-		if request.form['username'] != app.config['USERNAME'] or redirect.form['password'] != app.config['PASSWORD']:
+		if request.form['username'] != app.config['USERNAME'] or request.form['password'] != app.config['PASSWORD']:
 			error = 'Invalid Credentials, Please Try Again'
 			return render_template('login.html', error = error)
 		else:
